@@ -21,7 +21,7 @@ export default function Login() {
       [e.target.name]: e.target.value
     });
   };
-
+const API_URL = import.meta.env.VITE_API_URL;
   const handleLogin = async () => {
     if (!form.email || !form.password) {
       setError("Fill all fields");
@@ -32,7 +32,9 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/users/login", {
+
+
+const res = await fetch(`${API_URL}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
