@@ -197,7 +197,7 @@ export default function CartIcon() {
     <button
       onClick={() => {
         setOpen(false);
-        navigate("/checkout", { state: { cart } });
+        navigate("/cart-checkout", { state: { cart } });
       }}
       className="
         w-full py-3 rounded-xl font-bold

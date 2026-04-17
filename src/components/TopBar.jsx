@@ -19,7 +19,7 @@ export default function TopBar() {
         animate={{ x: [0, -width] }}
         transition={{
           repeat: Infinity,
-          duration: window.innerWidth < 768 ? 7 : 9,
+          duration: window.innerWidth < 768 ? 7 : 8,
           ease: "linear",
         }}
       >

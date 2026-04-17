@@ -1,15 +1,22 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Location from "../components/Location";
+
 export default function Contact() {
+
+  // 🔥 STATE
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: ""
   });
 
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // 🔥 HANDLE CHANGE
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -17,15 +24,45 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = () => {
+  // 🔥 SUBMIT
+  const handleSubmit = async () => {
     if (!form.name || !form.email || !form.message) {
       alert("Fill all fields");
       return;
     }
 
-    alert("Message sent ✅");
+    setLoading(true);
+
+    try {
+      await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      setLoading(false);
+      setSuccess(true);
+
+      // reset form
+      setForm({
+        name: "",
+        email: "",
+        message: ""
+      });
+
+      // auto hide
+      setTimeout(() => setSuccess(false), 4000);
+
+    } catch (err) {
+      console.error(err);
+      alert("Error sending message");
+      setLoading(false);
+    }
   };
 
+  
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white p-4">
 
@@ -201,7 +238,80 @@ export default function Contact() {
             >
               Send Message
             </motion.button>
+<AnimatePresence>
+  {success && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="
+        fixed inset-0 z-50
+        flex items-center justify-center
+        bg-black/60 backdrop-blur-sm
+        px-4
+      "
+    >
 
+      {/* 🔥 CARD */}
+      <motion.div
+        initial={{ scale: 0.7, y: 80, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.7, y: 80, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 120 }}
+        className="
+          w-full max-w-sm
+          p-6 rounded-3xl
+          bg-white/90 dark:bg-[#0a0a0a]/90
+          backdrop-blur-xl
+          border border-yellow-500/20
+          shadow-[0_0_40px_rgba(234,179,8,0.25)]
+          text-center
+        "
+      >
+
+        {/* 🔥 ICON */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring" }}
+          className="
+            w-16 h-16 mx-auto mb-4
+            flex items-center justify-center
+            rounded-full
+            bg-green-500/10
+          "
+        >
+          <span className="text-3xl text-green-500">✔</span>
+        </motion.div>
+
+        {/* 🔥 TITLE */}
+        <h2 className="text-lg font-bold text-yellow-500">
+          Message Sent
+        </h2>
+
+        {/* 🔥 TEXT */}
+        <p className="text-sm text-gray-400 mt-2 mb-6">
+          Thank you for contacting us.  
+          We’ll reply to your email soon.
+        </p>
+
+        {/* 🔥 BUTTON */}
+        <button
+          onClick={() => setSuccess(false)}
+          className="
+            w-full py-2 rounded-xl
+            bg-gradient-to-r from-yellow-500 to-yellow-600
+            text-black font-semibold
+            hover:opacity-90 transition
+          "
+        >
+          Continue
+        </button>
+
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
           </motion.div>
 
         </div>
@@ -233,4 +343,3 @@ export default function Contact() {
   );
 }
 
-<Location />

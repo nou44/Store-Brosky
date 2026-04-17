@@ -24,10 +24,40 @@ export default function Home() {
       setIndex((prev) => (prev + 1) % images.length);
     }, 4000);
 
+    
     return () => clearInterval(interval);
   }, []);
 
- 
+ const [email, setEmail] = useState("");
+const [subscribed, setSubscribed] = useState(false);
+
+const handleSubscribe = async () => {
+  if (!email || !email.includes("@")) {
+    alert("Enter a valid email");
+    return;
+  }
+
+  try {
+    await fetch("http://localhost:5000/api/subscribe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    setSubscribed(true);
+    setEmail("");
+
+    setTimeout(() => {
+      setSubscribed(false);
+    }, 3000);
+
+  } catch (err) {
+    console.error(err);
+    alert("Error");
+  }
+};
 
   return (
     <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen">
@@ -166,16 +196,18 @@ export default function Home() {
 
     {/* 🔥 INPUT */}
     <div className="
-      flex items-center
+      relative flex items-center
       border border-gray-700
       rounded-xl overflow-hidden
       transition duration-300
       focus-within:border-yellow-500
-      focus-within:shadow-[0_0_15px_rgba(234,179,8,0.4)]
+      focus-within:shadow-[0_0_20px_rgba(234,179,8,0.5)]
     ">
 
       <input
         type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
         className="
           flex-1 px-4 py-3
@@ -188,19 +220,40 @@ export default function Home() {
       />
 
       <button
+        onClick={handleSubscribe}
         className="
           px-5 h-full
           bg-yellow-500 text-black font-bold
 
           hover:bg-yellow-400
           hover:scale-105
+          active:scale-95
+
           transition duration-300
         "
       >
         →
       </button>
 
+      {/* 🔥 glow effect */}
+      <div className="absolute inset-0 pointer-events-none rounded-xl border border-yellow-500/20"></div>
+
     </div>
+
+    {/* 🔥 SUCCESS MESSAGE */}
+    <AnimatePresence>
+      {subscribed && (
+        <motion.div
+          initial={{ opacity: 0, y: 15, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 15 }}
+          transition={{ duration: 0.4 }}
+          className="mt-4 text-green-400 font-semibold text-sm md:text-base"
+        >
+          Welcome to the family 🖤🔥
+        </motion.div>
+      )}
+    </AnimatePresence>
 
     {/* 🔥 SMALL TRUST TEXT */}
     <p className="text-xs text-gray-400 mt-3">
