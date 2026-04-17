@@ -6,6 +6,8 @@ import Location from "../components/Location";
 
 export default function Contact() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   // 🔥 STATE
   const [form, setForm] = useState({
     name: "",
@@ -34,7 +36,7 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,26 +44,28 @@ export default function Contact() {
         body: JSON.stringify(form),
       });
 
-      setLoading(false);
+      // 🔥 مهم: check response
+      if (!res.ok) {
+        throw new Error("Failed to send");
+      }
+
       setSuccess(true);
 
-      // reset form
       setForm({
         name: "",
         email: "",
         message: ""
       });
 
-      // auto hide
       setTimeout(() => setSuccess(false), 4000);
 
     } catch (err) {
       console.error(err);
       alert("Error sending message");
-      setLoading(false);
     }
-  };
 
+    setLoading(false);
+  };
   
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white p-4">

@@ -5,7 +5,7 @@ import PromoBar from "../components/PromoBar";
 import YouMayAlsoLike from "../components/YouMayAlsoLike";
 export default function Home() {
   const navigate = useNavigate();
-
+const API_URL = import.meta.env.VITE_API_URL;
   const images = [
     "/Outfit.png",
     "/Shoes.png",
@@ -38,7 +38,7 @@ const handleSubscribe = async () => {
   }
 
   try {
-    await fetch("http://localhost:5000/api/subscribe", {
+    await fetch(`${API_URL}/api/subscribe`, { // ✅ تبدلات غير هادي
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,6 @@ const handleSubscribe = async () => {
     alert("Error");
   }
 };
-
   return (
     <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen">
 

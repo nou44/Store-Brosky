@@ -12,7 +12,7 @@ const navigate = useNavigate();
     city: "",
     address: ""
   });
-
+const API_URL = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -51,37 +51,36 @@ const handleSubmit = async () => {
   setLoading(true);
 
   try {
- // 🔥 SEND TO BACKEND
-await fetch("http://localhost:5000/api/orders", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    items: [
-      {
-        id: product.id, // 🔥 مهم جدا باش TopProducts يخدم
-        name: product.name,
-        price: product.price,
-        qty: 1,
-        color: color,
-        size: size,
-        image: product.images[color]?.main,
+    await fetch(`${API_URL}/api/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    ],
-    total: product.price,
-    customer: {
-      name: form.name,
-      phone: form.phone,
-      city: form.city,
-      address: form.address,
-    },
-  }),
-});
+      body: JSON.stringify({
+        items: [
+          {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            qty: 1,
+            color: color,
+            size: size,
+            image: product.images[color]?.main,
+          },
+        ],
+        total: product.price,
+        customer: {
+          name: form.name,
+          phone: form.phone,
+          city: form.city,
+          address: form.address,
+        },
+      }),
+    });
 
     setLoading(false);
     setSuccess(true);
-    setShowOptions(true); // 🔥 الجديد
+    setShowOptions(true);
 
   } catch (err) {
     console.error(err);

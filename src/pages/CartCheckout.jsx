@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function CartCheckout() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const { state } = useLocation();
   const cart = state?.cart || [];
   const navigate = useNavigate();
@@ -24,49 +26,48 @@ export default function CartCheckout() {
 
   const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
-  const handleSubmit = async () => {
-    if (!form.name || !form.phone || !form.city) {
-      alert("Fill all fields");
-      return;
-    }
+const handleSubmit = async () => {
+  if (!form.name || !form.phone || !form.city) {
+    alert("Fill all fields");
+    return;
+  }
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-  await fetch("http://localhost:5000/api/orders", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    
-items: cart.map(item => ({
-  id: item.id,
-  name: item.name,
-  price: item.price,
-  qty: item.qty,
-  color: item.color,
-  size: item.size,
+  try {
+    await fetch(`${API_URL}/api/orders`, { // ✅ تبدلات غير هادي
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        
+        items: cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          qty: item.qty,
+          color: item.color,
+          size: item.size,
 
-  // 🔥 الحل الصح
-  image:
-    item.images?.[item.color]?.main ||
-    item.images?.black?.main ||
-    "/placeholder.png",
-})),
+          image:
+            item.images?.[item.color]?.main ||
+            item.images?.black?.main ||
+            "/placeholder.png",
+        })),
 
-    total,
-    customer: form,
-  }),
-});
+        total,
+        customer: form,
+      }),
+    });
 
-      setLoading(false);
-      setShowOptions(true);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  };
+    setLoading(false);
+    setShowOptions(true);
+  } catch (err) {
+    console.error(err);
+    setLoading(false);
+  }
+};
 
   return (
     <div className="
