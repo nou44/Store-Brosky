@@ -63,9 +63,9 @@ window.dispatchEvent(new Event("userChanged"));
 navigate("/dashboard");
 
     } catch (err) {
-      console.log(err);
-      setError("Server error");
-    }
+  console.log("🔥 LOGIN ERROR:", err);
+  res.status(500).json({ error: err.message });
+}
 
     setLoading(false);
   };
