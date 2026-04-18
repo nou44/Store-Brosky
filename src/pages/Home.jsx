@@ -117,45 +117,68 @@ useEffect(() => {
           </AnimatePresence>
 
           {/* 🔥 overlay */}
-          <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-4">
+       {/* 🔥 overlay */}
+<div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-3 text-center px-4">
 
-            <h1 className="text-white text-2xl md:text-4xl font-bold text-center">
-              Welcome to BROSKY
-            </h1>
+  {/* 🔥 MAIN TITLE */}
+  <h1 className="text-white text-2xl md:text-5xl font-bold tracking-wide">
+    Welcome to <span className="text-yellow-500">SNOUPI</span>
+  </h1>
 
-            <button
-              onClick={() =>
-                document.getElementById("categories").scrollIntoView({ behavior: "smooth" })
-              }
-              className="
-                px-8 py-3 rounded-xl font-semibold text-white
-                bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600
-                transition-all duration-500
-                hover:scale-110
-                shadow-lg shadow-yellow-500/40
-              "
-            >
-              Shop Now
-            </button>
+  {/* 🔥 TYPING TEXT (هاد هو الجديد 🔥) */}
+  <p className="
+    text-sm md:text-xl
+    text-gray-200
+    h-6 md:h-8
+    font-medium
+    tracking-wide
+  ">
+    {displayText}
+    <span className="ml-1 animate-pulse text-yellow-500">|</span>
+  </p>
 
-          </div>
+  {/* 🔥 BUTTON */}
+  <button
+    onClick={() =>
+      document.getElementById("categories").scrollIntoView({ behavior: "smooth" })
+    }
+    className="
+      mt-2 px-8 py-3 rounded-xl font-semibold text-white
+
+      bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600
+      bg-[length:200%_200%]
+
+      transition-all duration-500
+      hover:bg-[position:100%_0]
+      hover:scale-110
+
+      shadow-lg shadow-yellow-500/40
+    "
+  >
+    Shop Now
+  </button>
+
+</div>
         </div>
 
         {/* 🔥 DOTS */}
-        <div className="flex justify-center gap-3 mt-4">
-          {images.map((_, i) => (
-            <div
-              key={i}
-              onClick={() => setIndex(i)}
-              className={`
-                w-3 h-3 rounded-full cursor-pointer transition
-                ${index === i
-                  ? "bg-yellow-500 scale-125"
-                  : "bg-gray-400 hover:bg-yellow-400"}
-              `}
-            />
-          ))}
-        </div>
+       <div className="flex justify-center gap-2 mt-5">
+
+  {images.map((_, i) => (
+    <div
+      key={i}
+      onClick={() => setIndex(i)}
+      className={`
+        h-2 rounded-full cursor-pointer transition-all duration-300
+
+        ${index === i
+          ? "w-8 bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.8)]"
+          : "w-2 bg-gray-400 hover:bg-yellow-400"}
+      `}
+    />
+  ))}
+
+</div>
       </div>
 
       {/* 🔥 CATEGORIES */}
