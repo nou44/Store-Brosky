@@ -7,10 +7,10 @@ export default function Home() {
   const navigate = useNavigate();
 const API_URL = import.meta.env.VITE_API_URL;
   const images = [
-    "/Outfit.png",
-    "/Shoes.png",
+    "/shirt..png",
+    "/shoes.png",
     "/Caps.png",
-    "/hero as.png",
+    "/Outfit.png",
   ];
 
   const [index, setIndex] = useState(0);
@@ -102,13 +102,13 @@ useEffect(() => {
 
       {/* 🔥 SLIDER */}
       <div className="max-w-6xl mx-auto pt-6 px-4">
-        <div className="relative rounded-2xl overflow-hidden border border-gray-200 dark:border-yellow-500/30">
+        <div className="relative rounded-2xl overflow-hidden border border-gray-200 dark:border-yellow-500/30 h-[300px] md:h-[450px]">
 
           <AnimatePresence mode="wait">
             <motion.img
               key={images[index]}
               src={images[index]}
-              className="w-full h-[260px] md:h-[420px] object-cover"
+           className="w-full h-[300px] md:h-[500px] object-cover"
               initial={{ opacity: 0, scale: 1.05 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
