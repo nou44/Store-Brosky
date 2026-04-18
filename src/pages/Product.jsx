@@ -39,20 +39,17 @@ export default function Product() {
           hover:shadow-[0_0_30px_rgba(234,179,8,0.3)]
         ">
 
-          <motion.img
-            key={currentImage}
-            src={currentImage}
-            className="
-              w-full h-full
-              object-contain
-
-              transition duration-500
-              hover:scale-105
-            "
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-          />
+         <motion.img
+  key={currentImage}
+  src={currentImage}
+  className="w-full h-full object-contain"
+  initial={{ opacity: 0, scale: 0.96 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{
+    duration: 0.35,
+    ease: "easeOut"
+  }}
+/>
 
         </div>
 
