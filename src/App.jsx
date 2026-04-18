@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
 import Navbar from "./components/Navbar";
+import Loader from "./components/Loader";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -13,10 +16,15 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 
 import ProtectedRoute from "./components/ProtectedRoute";
-import PrivateRoute from "./components/PrivateRoute";
+
 function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <BrowserRouter>
+
+      {/* 🔥 Loader overlay */}
+      {loading && <Loader onFinish={() => setLoading(false)} />}
 
       <Navbar />
 
@@ -25,11 +33,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/location" element={<LocationPage />} />
 
-        {/* 🔥 Products */}
         <Route path="/products" element={<Products />} />
         <Route path="/products/:category" element={<Products />} />
 
-        {/* 🔥 Product details */}
         <Route path="/product/:id" element={<Product />} />
 
         <Route path="/cart-checkout" element={<CartCheckout />} />
@@ -38,10 +44,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-        {/* 🔐 LOGIN */}
         <Route path="/login" element={<Login />} />
 
-        {/* 🔐 PROTECTED DASHBOARD */}
         <Route
           path="/dashboard"
           element={
