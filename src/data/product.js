@@ -248,13 +248,13 @@ const products = [
     shortName: "outfit",
     price: 199,
     oldPrice: null,
-    category: "caps",
+    category: "outfit",
     badge: "hot",
 
     rating: 4.0,
     reviews: 60,
 
-    description: "Clean cotton caps.",
+    description: "Clean cotton Shirt.",
 
     images: {
       white: {

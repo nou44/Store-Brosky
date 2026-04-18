@@ -154,12 +154,12 @@ export default function TopProducts({ orders }) {
 
       {/* 🔥 SHOW MORE */}
       {visibleProducts < sortedProducts.length && (
-        <button
-          onClick={() => setVisibleProducts(prev => prev + 1)}
-          className="mt-3 text-xs text-yellow-500 hover:underline"
-        >
-          Show more ↓
-        </button>
+       <button
+  onClick={() => setVisibleProducts(products.length)}
+  className="mt-3 text-xs text-yellow-500 hover:underline"
+>
+  Show more ↓
+</button>
       )}
 
     </div>
