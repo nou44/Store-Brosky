@@ -28,28 +28,31 @@ export default function Product() {
         {/* 🔥 IMAGE (UPGRADED) */}
         <div className="
           relative
-          rounded-2xl overflow-hidden
-          border border-yellow-500/30
-          bg-gray-100 dark:bg-black
+  rounded-2xl overflow-hidden
+  border border-yellow-500/30
+  bg-gray-100 dark:bg-black
 
-          w-full max-w-[420px]
-          mx-auto
+  w-full max-w-[420px]
+ aspect-square  /* 🔥 هذا هو الحل */
 
           transition duration-500
           hover:shadow-[0_0_30px_rgba(234,179,8,0.3)]
         ">
 
-         <motion.img
-  key={currentImage}
-  src={currentImage}
-  className="w-full h-full object-contain"
-  initial={{ opacity: 0, scale: 0.96 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{
-    duration: 0.35,
-    ease: "easeOut"
-  }}
-/>
+          <motion.img
+            key={currentImage}
+            src={currentImage}
+            className="
+              w-full h-full
+              object-contain
+
+              transition duration-500
+              hover:scale-105
+            "
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          />
 
         </div>
 
@@ -165,7 +168,7 @@ export default function Product() {
               shadow-lg shadow-yellow-500/30
               hover:shadow-yellow-500/60
 
-              active:scale-95
+           
             "
           >
             Buy Now
