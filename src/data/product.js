@@ -245,7 +245,7 @@ const products = [
     {
     id: 9,
     name: "Classic Shirt",
-    shortName: "Caps",
+    shortName: "outfit",
     price: 199,
     oldPrice: null,
     category: "caps",
