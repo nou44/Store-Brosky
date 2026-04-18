@@ -15,18 +15,30 @@ export default function Products() {
 
       <div className="max-w-7xl mx-auto p-4">
 
-        {/* 🔥 TITLE */}
+        {/* 🔥 TITLE (FIXED) */}
         <div className="flex justify-center mb-10">
           <div className="text-center">
-            <h1 className="text-xl md:text-2xl font-bold text-yellow-400 tracking-wide capitalize">
-              {category || "All Products"}
-            </h1>
+           <h1 className="
+  text-xl sm:text-2xl md:text-3xl font-semibold capitalize
+
+  bg-[linear-gradient(90deg,#eab308,#000000,#eab308)]
+  dark:bg-[linear-gradient(90deg,#eab308,#ffffff,#eab308)]
+
+  bg-[length:200%_100%]
+  bg-clip-text text-transparent
+  animate-gradientMove
+
+  tracking-wide
+">
+  {category || "All Products"}
+</h1>
+
             <div className="mx-auto mt-2 h-[2px] w-20 bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
           </div>
         </div>
 
-        {/* 🔥 GRID (Temu style spacing) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {/* 🔥 GRID (باقي كيف هو غير spacing خفيف) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
 
           {filteredProducts.map((product, i) => (
             <motion.div
@@ -46,29 +58,46 @@ export default function Products() {
               "
             >
 
-              {/* 🔥 IMAGE BIGGER (Temu style) */}
+              {/* 🔥 IMAGE */}
               <div className="
                 relative w-full
-                h-[240px] md:h-[260px]   /* 🔥 الصورة كبرناها */
+                h-[220px] sm:h-[240px] md:h-[260px]
                 overflow-hidden
                 bg-gray-100 dark:bg-black
               ">
                 <img
-                 src={Object.values(product.images)[0].main}
+                  src={Object.values(product.images)[0].main}
                   className="
                     w-full h-full
-                    object-cover   /* 🔥 مهم باش يبان detail */
+                    object-cover
                     group-hover:scale-110
                     transition duration-500
                   "
                 />
 
-                {/* 🔥 subtle overlay hover */}
+                {/* overlay (desktop only) */}
                 <div className="
                   absolute inset-0
-                  bg-black/0 group-hover:bg-black/10
+                  bg-black/0 md:group-hover:bg-black/10
                   transition duration-300
-                " />
+                  flex items-center justify-center
+                ">
+
+                  {/* 🔥 CTA FIXED */}
+                  <button className="
+                    hidden md:block
+                    opacity-0 group-hover:opacity-100
+                    translate-y-4 group-hover:translate-y-0
+                    transition duration-300
+
+                    px-4 py-2 text-sm
+                    bg-yellow-500 text-black
+                    rounded-full font-semibold
+                  ">
+                    View Product
+                  </button>
+
+                </div>
               </div>
 
               {/* 🔥 INFO */}
@@ -84,6 +113,17 @@ export default function Products() {
                 <p className="text-yellow-500 font-bold text-sm">
                   {product.price} DH
                 </p>
+
+                {/* 📱 MOBILE BUTTON (optional clean solution) */}
+                <div className="md:hidden mt-2">
+                  <button className="
+                    w-full py-1.5 text-xs
+                    bg-yellow-500 text-black
+                    rounded-md font-semibold
+                  ">
+                    View
+                  </button>
+                </div>
 
               </div>
 

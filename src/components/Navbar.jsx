@@ -160,23 +160,23 @@ export default function Navbar() {
   }}
   className="
     md:hidden
-    w-9 h-9 flex items-center justify-center
-    rounded-lg
+    w-12 h-12 flex items-center justify-center
+    rounded-xl
 
     text-2xl font-bold
 
     transition duration-300
 
-  
+    hover:bg-gray-100 dark:hover:bg-white/10
     active:scale-95
   "
 >
   <span
     className={`
-      transition-all duration-300
+      transition-all duration-300 flex items-center justify-center
       ${open 
-        ? "rotate-90 text-yellow-500 scale-105" 
-        : "rotate-0 text-black dark:text-white scale-100"}
+        ? "rotate-90 text-yellow-500 scale-110 text-2xl" 
+        : "rotate-0 text-black dark:text-white scale-100 text-3xl"}
     `}
   >
     {open ? "✕" : "≡"}

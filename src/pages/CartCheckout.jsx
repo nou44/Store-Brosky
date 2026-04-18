@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function CartCheckout() {
@@ -19,7 +19,15 @@ export default function CartCheckout() {
 
   const [loading, setLoading] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+useEffect(() => {
+  if (showOptions) {
+    const timer = setTimeout(() => {
+      setShowOptions(false);
+    }, 3500);
 
+    return () => clearTimeout(timer);
+  }
+}, [showOptions]);
   if (cart.length === 0) {
     return <div className="text-center mt-10 text-gray-600 dark:text-gray-300">Cart is empty</div>;
   }
@@ -207,6 +215,20 @@ const handleSubmit = async () => {
       </motion.div>
 
       {/* MODAL */}
+      {loading && (
+  <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div className="bg-white dark:bg-[#111] px-6 py-5 rounded-2xl flex flex-col items-center gap-3 shadow-xl">
+
+      {/* spinner */}
+      <div className="w-10 h-10 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        Processing your order...
+      </p>
+
+    </div>
+  </div>
+)}
       <AnimatePresence>
         {showOptions && (
           <motion.div
@@ -230,11 +252,18 @@ const handleSubmit = async () => {
 
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-yellow-500/10 border border-yellow-500/30">
-                  <span className="text-2xl text-yellow-500">✔</span>
+               <motion.div
+  initial={{ scale: 0 }}
+  animate={{ scale: 1 }}
+  transition={{ type: "spring", stiffness: 180 }}
+  className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500/10 border border-green-500/30"
+>
+  <span className="text-2xl text-green-500">✔</span>
+</motion.div>
                 </div>
               </div>
 
-              <h2 className="text-xl font-bold text-yellow-500">
+            <h2 className="text-xl font-bold text-green-500">
                 Order Confirmed
               </h2>
 
@@ -257,11 +286,16 @@ const handleSubmit = async () => {
 
                     setTimeout(() => setShowOptions(false), 500);
                   }}
-                  className="
-                    py-3 rounded-xl font-semibold
-                    bg-green-500 hover:bg-green-600
-                    text-white transition
-                  "
+                 className="
+  py-3 rounded-xl font-semibold
+  bg-gradient-to-r from-green-500 to-green-600
+  text-white
+
+  hover:scale-105 active:scale-95
+  transition-all duration-300
+
+  shadow-md hover:shadow-green-500/40
+"
                 >
                   Contact on WhatsApp
                 </button>
@@ -271,13 +305,15 @@ const handleSubmit = async () => {
                     setShowOptions(false);
                     navigate("/");
                   }}
-                  className="
-                    py-3 rounded-xl
-                    bg-gray-100 dark:bg-[#111]
-                    border border-gray-300 dark:border-white/10
-                    hover:bg-gray-200 dark:hover:bg-white/10
-                    transition
-                  "
+                 className="
+  py-3 rounded-xl
+  bg-gray-100 dark:bg-[#111]
+
+  border border-gray-300 dark:border-white/10
+
+  hover:scale-105 active:scale-95
+  transition
+"
                 >
                   Continue Shopping
                 </button>

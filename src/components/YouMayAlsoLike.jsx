@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import products from "../data/product";
 import { useCart } from "../context/CartContext";
@@ -12,7 +12,29 @@ export default function YouMayAlsoLike() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [addedId, setAddedId] = useState(null);
 
-  // 🔥 FLY ANIMATION (مصلوحة)
+  // ❤️ SAVE STATE
+  const [saved, setSaved] = useState([]);
+useEffect(() => {
+  if (selectedProduct) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  const handleEsc = (e) => {
+    if (e.key === "Escape") {
+      setSelectedProduct(null);
+    }
+  };
+
+  window.addEventListener("keydown", handleEsc);
+
+  return () => {
+    document.body.style.overflow = "auto";
+    window.removeEventListener("keydown", handleEsc);
+  };
+}, [selectedProduct]);
+  // 🔥 FLY ANIMATION (باقية كيف هي)
   const flyToCart = (imgSrc, e) => {
     if (!window.cartIcon) return;
 
@@ -21,13 +43,11 @@ export default function YouMayAlsoLike() {
 
     let start;
 
-    // 👇 فرق بين card و popup
     const card = e.currentTarget.closest(".product-card");
 
     if (card) {
       start = card.querySelector("img").getBoundingClientRect();
     } else {
-      // 👇 popup
       start = e.currentTarget
         .closest("div")
         .querySelector("img")
@@ -65,13 +85,25 @@ export default function YouMayAlsoLike() {
   return (
     <div className="max-w-6xl mx-auto mt-12 px-4">
 
-      {/* TITLE */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold">You may also like</h2>
-        <div className="h-[2px] w-16 bg-yellow-500 mt-1" />
+      {/* 🔥 TITLE PRO */}
+      <div className="mb-8">
+        <h2 className="
+          text-xl sm:text-2xl font-semibold
+
+          bg-[linear-gradient(90deg,#eab308,#000000,#eab308)]
+          dark:bg-[linear-gradient(90deg,#eab308,#ffffff,#eab308)]
+
+          bg-[length:200%_100%]
+          bg-clip-text text-transparent
+          animate-gradientMove
+        ">
+          You may also like
+        </h2>
+
+        <div className="h-[2px] w-20 mt-2 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
       </div>
 
-      {/* SCROLL */}
+      {/* 🔥 SCROLL */}
       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
 
         {products.map((p) => {
@@ -83,12 +115,17 @@ export default function YouMayAlsoLike() {
               key={p.id}
               className="product-card
                 min-w-[190px]
+
                 bg-white dark:bg-[#111]
                 rounded-2xl overflow-hidden
+
                 border border-gray-200 dark:border-yellow-500/20
-                transition duration-300
+
+                transition-all duration-300
+
                 hover:border-yellow-400
                 hover:shadow-[0_0_25px_rgba(234,179,8,0.35)]
+                hover:-translate-y-1
               "
             >
 
@@ -97,10 +134,64 @@ export default function YouMayAlsoLike() {
                 onClick={() => navigate(`/product/${p.id}`)}
                 className="relative cursor-pointer group overflow-hidden"
               >
+
+                {/* ❤️ SAVE */}
+             <button
+  onClick={(e) => {
+    e.stopPropagation();
+    setSaved(prev =>
+      prev.includes(p.id)
+        ? prev.filter(id => id !== p.id)
+        : [...prev, p.id]
+    );
+  }}
+  className="
+    absolute top-2 right-2 z-10
+
+    w-6 h-6 flex items-center justify-center
+    rounded-full
+
+    bg-white/80 dark:bg-black/60 backdrop-blur-sm
+
+    text-[11px]
+    transition duration-300
+
+    hover:scale-110
+  "
+>
+  <span className={saved.includes(p.id) ? "text-red-500" : "text-gray-400"}>
+    ♥
+  </span>
+</button>
+{/* 🔥 SAVE BADGE */}
+{p.oldPrice && (
+  <div className="
+    absolute top-2 left-2 z-10
+
+    bg-red-500 text-white
+    text-[10px] sm:text-xs
+    font-semibold
+
+    px-2 py-1
+    rounded-full
+
+    shadow-md
+  ">
+    Save {p.oldPrice - p.price} dh
+  </div>
+)}
                 <img
                   src={mainImg}
                   className="w-full h-44 object-cover transition duration-500 group-hover:scale-105"
                 />
+
+                {/* overlay */}
+                <div className="
+                  absolute inset-0
+                  bg-black/0 group-hover:bg-black/10
+                  transition duration-300
+                " />
+
               </div>
 
               <div className="p-3">
@@ -118,7 +209,7 @@ export default function YouMayAlsoLike() {
                   </span>
                 </div>
 
-                {/* 🔥 BUTTON 1 (غير popup) */}
+                {/* 🔥 BUTTON */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -127,7 +218,13 @@ export default function YouMayAlsoLike() {
                     setSelectedColor(firstColor);
                     setSelectedSize(p.sizes[0]);
                   }}
-                  className="mt-3 w-full py-2 rounded-xl bg-yellow-500 text-black font-semibold hover:scale-105 transition"
+                  className="
+                    mt-3 w-full py-2 rounded-xl
+                    bg-yellow-500 text-black font-semibold
+
+                    hover:scale-105 active:scale-95
+                    transition
+                  "
                 >
                   Add to cart
                 </button>
@@ -147,54 +244,88 @@ export default function YouMayAlsoLike() {
       )}
 
       {/* 🔥 POPUP */}
- {selectedProduct && (
-  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[999]">
+     {selectedProduct && (
+  <div
+    onClick={() => setSelectedProduct(null)}
+    className="
+      fixed inset-0 z-[999]
 
+      bg-black/50 backdrop-blur-md
+
+      flex items-center justify-center
+
+      animate-fadeIn
+    "
+  >
+
+    {/* CARD */}
     <div
+      onClick={(e) => e.stopPropagation()}
       className="
         bg-white dark:bg-[#111]
         rounded-2xl
 
-        w-[85%] sm:w-[360px]
+        w-[90%] sm:w-[360px]
         max-w-[380px]
 
-        p-4
+        p-5
         relative
 
         shadow-2xl
-        border border-white/10
+        border border-yellow-500/20
 
-        animate-[scaleIn_.25s_ease]
+        transform transition-all duration-300
+        scale-95 animate-popupIn
       "
     >
 
-      {/* ❌ CLOSE */}
+      {/* CLOSE */}
       <button
         onClick={() => setSelectedProduct(null)}
-        className="absolute top-3 right-3 text-lg hover:text-red-500 transition"
+        className="
+          absolute top-3 right-3
+          text-lg
+
+          hover:text-red-500
+          transition
+        "
       >
         ✕
       </button>
 
-      {/* 🖼️ IMAGE */}
-      <div className="w-full h-[140px] sm:h-[160px] flex items-center justify-center bg-gray-100 dark:bg-black rounded-xl mb-3 overflow-hidden">
+      {/* IMAGE */}
+      <div className="
+        w-full h-[150px]
+        flex items-center justify-center
+
+        bg-gray-100 dark:bg-black
+        rounded-xl mb-4 overflow-hidden
+      ">
         <img
           src={selectedProduct.images[selectedColor]?.main}
-          className="max-h-full max-w-full object-contain"
+          className="
+            max-h-full max-w-full object-contain
+            transition duration-300 hover:scale-105
+          "
         />
       </div>
 
-      {/* 🏷️ NAME */}
-      <h3 className="font-semibold text-sm mb-1">
+      {/* NAME */}
+      <h3 className="font-semibold text-base mb-1">
         {selectedProduct.name}
       </h3>
 
-      {/* 💰 PRICE */}
-      <p className="text-red-500 font-bold text-sm mb-3">
+      {/* PRICE */}
+      <p className="text-red-500 font-bold text-base">
         {selectedProduct.price} DH
       </p>
 
-      {/* 🎨 COLORS */}
+      {/* MICRO UX */}
+      <p className="text-xs text-gray-400 mb-3">
+        Free delivery • Limited stock
+      </p>
+
+      {/* COLORS */}
       <div className="flex gap-2 mb-3 flex-wrap">
         {Object.keys(selectedProduct.images).map((c) => (
           <button
@@ -202,10 +333,10 @@ export default function YouMayAlsoLike() {
             onClick={() => setSelectedColor(c)}
             className={`
               px-2 py-1 rounded-full border text-xs capitalize
-              transition
+              transition-all duration-300
 
               ${selectedColor === c
-                ? "border-yellow-500 bg-yellow-500 text-black"
+                ? "border-yellow-500 bg-yellow-500 text-black scale-105"
                 : "border-gray-300 dark:border-gray-700 hover:border-yellow-400"}
             `}
           >
@@ -214,7 +345,7 @@ export default function YouMayAlsoLike() {
         ))}
       </div>
 
-      {/* 📏 SIZES */}
+      {/* SIZES */}
       <div className="flex gap-2 mb-4 flex-wrap">
         {selectedProduct.sizes.map((s) => (
           <button
@@ -222,10 +353,10 @@ export default function YouMayAlsoLike() {
             onClick={() => setSelectedSize(s)}
             className={`
               px-2 py-1 rounded-full border text-xs
-              transition
+              transition-all duration-300
 
               ${selectedSize === s
-                ? "border-yellow-500 bg-yellow-500 text-black"
+                ? "border-yellow-500 bg-yellow-500 text-black scale-105"
                 : "border-gray-300 dark:border-gray-700 hover:border-yellow-400"}
             `}
           >
@@ -234,7 +365,7 @@ export default function YouMayAlsoLike() {
         ))}
       </div>
 
-      {/* 🔥 ADD TO CART (animation stays) */}
+      {/* ADD TO CART */}
       <button
         onClick={(e) => {
           flyToCart(
@@ -257,19 +388,20 @@ export default function YouMayAlsoLike() {
           }, 1500);
         }}
         className="
-          w-full py-2.5 rounded-xl text-sm font-semibold
+          w-full py-3 rounded-xl text-sm font-semibold
 
           bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-600
           text-black
 
-          hover:scale-105 transition
+          hover:scale-105 active:scale-95
+          transition
           shadow-md hover:shadow-yellow-500/40
         "
       >
         Add to cart
       </button>
 
-      {/* 🔥 BUY NOW */}
+      {/* BUY NOW */}
       <button
         onClick={() => {
           navigate("/checkout", {
@@ -281,10 +413,11 @@ export default function YouMayAlsoLike() {
           });
         }}
         className="
-          w-full mt-2 py-2.5 rounded-xl text-sm font-semibold
+          w-full mt-2 py-3 rounded-xl text-sm font-semibold
 
           bg-red-500 text-white
-          hover:scale-105 transition
+          hover:scale-105 active:scale-95
+          transition
         "
       >
         Buy it now
@@ -293,7 +426,6 @@ export default function YouMayAlsoLike() {
     </div>
   </div>
 )}
-
     </div>
   );
 }

@@ -248,7 +248,7 @@ const handleSubmit = async () => {
               disabled:opacity-50
             "
           >
-            {loading ? "Processing..." : success ? "Order Sent ✅" : "Confirm Order"}
+           {loading ? "Processing..." : "Confirm Order"}
           </motion.button>
 
         </motion.div>
@@ -256,15 +256,19 @@ const handleSubmit = async () => {
       </div>
 
       {/* 🔥 SUCCESS MESSAGE */}
-      {success && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center mt-10 text-yellow-500 font-semibold"
-        >
-          Your order has been sent successfully 🎉
-        </motion.div>
-      )}
+   {loading && (
+  <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div className="bg-white dark:bg-[#111] px-6 py-5 rounded-2xl flex flex-col items-center gap-3 shadow-xl">
+
+      <div className="w-10 h-10 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        Processing your order...
+      </p>
+
+    </div>
+  </div>
+)}
 <AnimatePresence>
   {showOptions && (
     <motion.div
@@ -283,18 +287,21 @@ const handleSubmit = async () => {
       >
 
         {/* ICON SUCCESS */}
-        <div className="flex justify-center mb-4">
-          <div className="w-14 h-14 flex items-center justify-center rounded-full bg-yellow-500/10">
-            <span className="text-2xl text-yellow-500">✔</span>
-          </div>
-        </div>
+        <motion.div
+  initial={{ scale: 0 }}
+  animate={{ scale: 1 }}
+  transition={{ type: "spring", stiffness: 180 }}
+  className="w-14 h-14 flex items-center justify-center rounded-full bg-green-500/10"
+>
+  <span className="text-2xl text-green-500">✔</span>
+</motion.div>
 
         {/* TITLE */}
-        <h2 className="text-lg font-bold text-yellow-500">
+      <h2 className="text-lg font-bold text-green-500">
           Order Confirmed
         </h2>
 
-        <p className="text-gray-400 text-sm mt-2 mb-6">
+       <p className="text-gray-500 dark:text-gray-400 text-sm mt-2 mb-6">
           Your order has been saved successfully
         </p>
 
@@ -320,12 +327,17 @@ Address: ${form.address}`;
                 "_blank"
               );
             }}
-            className="
-              flex items-center justify-center gap-2
-              bg-green-500 hover:bg-green-600
-              text-white py-2 rounded-lg font-medium
-              transition
-            "
+          className="
+  flex items-center justify-center gap-2
+
+  bg-gradient-to-r from-green-500 to-green-600
+  text-white py-2.5 rounded-xl font-semibold
+
+  hover:scale-105 active:scale-95
+  transition-all duration-300
+
+  shadow-md hover:shadow-green-500/40
+"
           >
             {/* WhatsApp Icon */}
             <svg
@@ -343,11 +355,15 @@ Address: ${form.address}`;
           {/* Continue */}
           <button
             onClick={() => setShowOptions(false)}
-            className="
-              py-2 rounded-lg
-              bg-gray-200 dark:bg-gray-700
-              hover:opacity-80 transition
-            "
+          className="
+  py-2.5 rounded-xl
+  bg-gray-200 dark:bg-gray-700
+
+  text-sm font-medium
+
+  hover:scale-105 active:scale-95
+  transition
+"
           >
             Continue
           </button>

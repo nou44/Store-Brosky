@@ -58,6 +58,42 @@ const handleSubscribe = async () => {
     alert("Error");
   }
 };
+const texts = [
+  "Discover your style",
+  "Find your perfect outfit",
+  "Upgrade your look",
+  "Luxury streetwear vibes"
+];
+
+const [displayText, setDisplayText] = useState("");
+const [textIndex, setTextIndex] = useState(0);
+const [isDeleting, setIsDeleting] = useState(false);
+
+useEffect(() => {
+  const current = texts[textIndex];
+  let timeout;
+
+  if (!isDeleting) {
+    // typing
+    timeout = setTimeout(() => {
+      setDisplayText(current.substring(0, displayText.length + 1));
+    }, 60);
+  } else {
+    // deleting
+    timeout = setTimeout(() => {
+      setDisplayText(current.substring(0, displayText.length - 1));
+    }, 40);
+  }
+
+  if (!isDeleting && displayText === current) {
+    timeout = setTimeout(() => setIsDeleting(true), 1200);
+  } else if (isDeleting && displayText === "") {
+    setIsDeleting(false);
+    setTextIndex((prev) => (prev + 1) % texts.length);
+  }
+
+  return () => clearTimeout(timeout);
+}, [displayText, isDeleting, textIndex]);
   return (
     <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen">
 
@@ -120,55 +156,104 @@ const handleSubscribe = async () => {
       </div>
 
       {/* 🔥 CATEGORIES */}
-      <div id="categories" className="max-w-6xl mx-auto mt-16 px-4">
+    <div id="categories" className="max-w-6xl mx-auto mt-16 px-4">
 
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-yellow-500 tracking-wide">
-            Categories
-          </h2>
-          <div className="mx-auto mt-2 h-[2px] w-20 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+  {/* 🔥 TITLE PRO */}
+  <div className="text-center mb-12">
+    <h2 className="
+      text-xl sm:text-2xl md:text-3xl font-semibold
+
+      bg-[linear-gradient(90deg,#eab308,#000000,#eab308)]
+      dark:bg-[linear-gradient(90deg,#eab308,#ffffff,#eab308)]
+
+      bg-[length:200%_100%]
+      bg-clip-text text-transparent
+      animate-gradientMove
+
+      tracking-wide
+    ">
+      Categories
+    </h2>
+<p className="
+  mt-3 text-sm md:text-base
+  text-gray-600 dark:text-gray-300
+  font-medium
+  h-6
+">
+  {displayText}
+  <span className="ml-1 animate-pulse text-yellow-500">|</span>
+</p>
+    <div className="mx-auto mt-2 h-[2px] w-24 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+  </div>
+
+  {/* 🔥 GRID */}
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
+
+    {[
+      { name: "outfit", img: "/outfit ct.png" },
+      { name: "shoes", img: "/Shoes ct.png" },
+      { name: "caps", img: "/Caps.png" },
+      { name: "accessories", img: "/Accessoires.png" },
+    ].map((cat, i) => (
+      <div
+        key={i}
+        onClick={() => navigate(`/products/${cat.name.toLowerCase()}`)}
+        className="
+          relative rounded-2xl overflow-hidden group cursor-pointer
+
+          border border-yellow-500/20
+          transition-all duration-300
+
+          hover:border-yellow-400
+          hover:shadow-[0_0_25px_rgba(234,179,8,0.35)]
+          hover:-translate-y-1
+        "
+      >
+
+        {/* IMAGE */}
+        <img
+          src={cat.img}
+          className="
+            w-full h-40 md:h-48 object-cover
+
+            transition duration-700
+            group-hover:scale-110
+          "
+        />
+
+        {/* 🔥 OVERLAY */}
+        <div className="
+          absolute inset-0
+          bg-gradient-to-t from-black/70 via-black/20 to-transparent
+          flex items-end justify-center pb-4
+        ">
+
+          {/* 🔥 TEXT WITH ANIMATION */}
+          <span className="
+            text-white font-semibold text-sm md:text-lg uppercase tracking-widest
+
+            transition-all duration-300
+            group-hover:text-yellow-400
+            group-hover:tracking-[0.25em]
+            group-hover:scale-105
+          ">
+            {cat.name}
+          </span>
+
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        {/* 🔥 subtle glow */}
+        <div className="
+          absolute inset-0 opacity-0 group-hover:opacity-100
+          bg-yellow-500/10
+          transition duration-300
+        " />
 
-          {[
-            { name: "outfit", img: "/outfit ct.png" },
-            { name: "shoes", img: "/Shoes ct.png" },
-            { name: "caps", img: "/Caps.png" },
-            { name: "accessories", img: "/Accessoires.png" },
-          ].map((cat, i) => (
-            <div
-              key={i}
-              onClick={() => navigate(`/products/${cat.name.toLowerCase()}`)}
-              className="
-                relative rounded-2xl overflow-hidden group cursor-pointer
-                border border-yellow-500/20
-                hover:border-yellow-400
-                transition-all duration-300
-                hover:shadow-[0_0_20px_rgba(234,179,8,0.4)]
-              "
-            >
-
-              <img
-                src={cat.img}
-                className="
-                  w-full h-40 object-cover
-                  group-hover:scale-110
-                  transition duration-500
-                "
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end justify-center pb-4">
-                <span className="text-white font-bold text-lg uppercase tracking-wide">
-                  {cat.name}
-                </span>
-              </div>
-
-            </div>
-          ))}
-
-        </div>
       </div>
+    ))}
+
+  </div>
+</div>
 
       {/* 🔥 PROMO BAR */}
       <div className="mt-10">
