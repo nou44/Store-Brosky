@@ -1,10 +1,35 @@
 const products = [
   {
     id: 1,
+    name: "Premium Over jacket",
+    shortName: "Oversized Tee",
+    price: 230,
+    oldPrice: 400,
+    category: "outfit",
+    badge: "sale",
+
+    rating: 4.5,
+    reviews: 120,
+
+    description: "High-quality oversized t-shirt made from soft cotton.",
+
+    images: {
+      pink: {
+        main: "/jacketpink.png",
+        hover: "/jacketpink.png"
+      },
+     
+    },
+
+    sizes: ["S", "M", "L"],
+    stock: 12
+  },
+  {
+    id: 2,
     name: "Premium Over Shirt",
     shortName: "Oversized Tee",
-    price: 550,
-    oldPrice: 700,
+    price: 200,
+    oldPrice: 300,
     category: "outfit",
     badge: "sale",
 
@@ -15,19 +40,18 @@ const products = [
 
     images: {
       black: {
-        main: "/brosky shirt black.png",
-        hover: "/brosky shirt.png"
+        main: "/sh black.png",
+        hover: "/sh black.png"
       },
-      white: {
-        main: "/brosky shirt.png",
-        hover: "//brosky shirt black.png"
+      purple: {
+        main: "/sh purple.png",
+        hover: "//sh purple.png"
       }
     },
 
     sizes: ["S", "M", "L"],
     stock: 12
   },
-
   {
     id: 2,
     name: "Nike Air Sneakers",
@@ -212,6 +236,34 @@ const products = [
       black: {
         main: "/black caps 1.png",
         hover: "/black caps 1.png"
+      }
+    },
+
+    sizes: ["S", "M", "L"],
+    stock: 15
+  },
+    {
+    id: 8,
+    name: "Classic Shirt",
+    shortName: "Caps",
+    price: 199,
+    oldPrice: null,
+    category: "caps",
+    badge: "hot",
+
+    rating: 4.0,
+    reviews: 60,
+
+    description: "Clean cotton caps.",
+
+    images: {
+      white: {
+        main: "/brosky shirt black.png",
+        hover: "/brosky shirt black.png"
+      },
+      black: {
+        main: "/brosky shirt.png",
+        hover: "/brosky shirt.png"
       }
     },
 
