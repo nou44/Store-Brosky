@@ -243,7 +243,7 @@ const products = [
     stock: 15
   },
     {
-    id: 8,
+    id: 9,
     name: "Classic Shirt",
     shortName: "Caps",
     price: 199,
