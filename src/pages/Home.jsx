@@ -8,7 +8,7 @@ export default function Home() {
 const API_URL = import.meta.env.VITE_API_URL;
   const images = [
     "/shirt..png",
-    "/shoes.png",
+    "/proshoes.png",
     "/Caps.png",
     "/Outfit.png",
   ];
