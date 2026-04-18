@@ -28,6 +28,7 @@ const API_URL = import.meta.env.VITE_API_URL;
     return () => clearInterval(interval);
   }, []);
 
+  
  const [email, setEmail] = useState("");
 const [subscribed, setSubscribed] = useState(false);
 
@@ -94,6 +95,8 @@ useEffect(() => {
 
   return () => clearTimeout(timeout);
 }, [displayText, isDeleting, textIndex]);
+
+
   return (
     <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen">
 

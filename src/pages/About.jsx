@@ -21,22 +21,35 @@ export default function About() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* 🔥 TITLE GOLD */}
-        <motion.h1
-  initial={{ opacity: 0, y: -20 }}
-  animate={{ opacity: 1, y: 0 }}
-  className="
-    text-2xl md:text-3xl font-bold text-center
-    text-yellow-500 tracking-wide
-  "
->
-  About BROSKY
+        {/* 🔥 TITLE PRO */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-10"
+        >
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide">
 
-  {/* 🔥 GOLD LINE UNDER TITLE */}
-  <div className="mx-auto mt-2 h-[2px] w-16 bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
-</motion.h1>
+            {/* DARK MODE */}
+            <span className="hidden dark:inline bg-gradient-to-r from-yellow-400 via-white to-yellow-500 bg-[length:200%] animate-[shine_4s_linear_infinite] bg-clip-text text-transparent">
+              About SNOUPI
+            </span>
+
+            {/* LIGHT MODE */}
+            <span className="dark:hidden bg-gradient-to-r from-yellow-500 via-black to-yellow-600 bg-[length:200%] animate-[shine_4s_linear_infinite] bg-clip-text text-transparent">
+              About SNOUPI
+            </span>
+
+          </h1>
+
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-3 max-w-xl mx-auto">
+            We are building more than a store — we are creating a premium streetwear experience.
+          </p>
+
+          <div className="mx-auto mt-4 h-[2px] w-24 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+        </motion.div>
+
         {/* 🔥 TEAM */}
-     <div className="grid md:grid-cols-2 gap-10 mt-8 md:mt-12">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-10">
 
           {team.map((person, i) => (
             <motion.div
@@ -46,22 +59,19 @@ export default function About() {
               transition={{ delay: i * 0.2 }}
               className="
                 group
+                relative
                 border border-yellow-500/20
                 rounded-2xl overflow-hidden
                 bg-white dark:bg-[#0a0a0a]
 
-                h-[420px] md:h-[480px]
-
-                flex flex-col justify-between
-
                 transition duration-500
                 hover:border-yellow-400
-                hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]
+                hover:shadow-[0_0_40px_rgba(234,179,8,0.4)]
               "
             >
 
               {/* 🔥 IMAGE */}
-              <div className="overflow-hidden h-[60%]">
+              <div className="relative h-[280px] md:h-[320px] overflow-hidden">
                 <img
                   src={person.img}
                   className="
@@ -70,36 +80,34 @@ export default function About() {
                     transition duration-700
                   "
                 />
+
+                {/* overlay */}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition duration-500" />
               </div>
 
               {/* 🔥 CONTENT */}
               <div className="p-5 space-y-4">
 
-                {/* NAME BOX */}
-                <div className="
-                  border border-yellow-500/20
-                  rounded-xl p-3 text-center
-                  bg-gray-50 dark:bg-black
-                ">
-                  <h2 className="text-lg font-bold text-yellow-500">
+                {/* NAME */}
+                <div className="text-center">
+                  <h2 className="text-xl font-bold text-yellow-500 group-hover:scale-105 transition">
                     {person.name}
                   </h2>
 
-                  <p className="text-yellow-400 text-xs tracking-widest">
+                  <p className="text-xs tracking-widest text-yellow-400">
                     {person.role}
                   </p>
                 </div>
 
-                {/* DESC BOX */}
-                <div className="
-                  border border-yellow-500/10
-                  rounded-xl p-4 text-center
-                  bg-gray-50 dark:bg-black
+                {/* DESC */}
+                <p className="
+                  text-sm leading-relaxed text-center
+                  text-gray-600 dark:text-gray-400
+                  group-hover:text-gray-800 dark:group-hover:text-gray-300
+                  transition
                 ">
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    {person.desc}
-                  </p>
-                </div>
+                  {person.desc}
+                </p>
 
               </div>
 
@@ -108,7 +116,7 @@ export default function About() {
 
         </div>
 
-        {/* 🔥 FOOTER GOLD */}
+        {/* 🔥 FOOTER */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -126,12 +134,12 @@ export default function About() {
               opacity-90 hover:opacity-100
               transition duration-300
               hover:scale-105
-              drop-shadow-[0_0_15px_rgba(234,179,8,0.4)]
+              drop-shadow-[0_0_20px_rgba(234,179,8,0.5)]
             "
           />
 
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © 2026 BLACKBOX. All rights reserved.
+            © 2026 SNOUPI. All rights reserved.
           </p>
 
         </motion.div>
