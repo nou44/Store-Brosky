@@ -188,14 +188,14 @@ const logout = () => {
   </div>
 
   {/* 🔥 BUTTON */}
-  {visibleOrders < orders.length && (
-    <button
-      onClick={() => setVisibleOrders(prev => prev + 3)}
-      className="mt-3 text-xs text-yellow-500 hover:underline"
-    >
-      Show more ↓
-    </button>
-  )}
+ {visibleOrders < orders.length && (
+  <button
+    onClick={() => setVisibleOrders(orders.length)}
+    className="mt-3 text-xs text-yellow-500 hover:underline"
+  >
+    Show more ↓
+  </button>
+)}
 
 </Box>
 
