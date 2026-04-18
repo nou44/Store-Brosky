@@ -232,14 +232,16 @@ const logout = () => {
 
   </div>
 
+  
   {visibleMessages < messages.length && (
-    <button
-  onClick={() => setVisibleProducts(products.length)}
-  className="mt-3 text-xs text-yellow-500 hover:underline"
->
-  Show more ↓
-</button>
-  )}
+  <button
+    onClick={() => setVisibleMessages(messages.length)}
+    className="mt-3 text-xs text-yellow-500 hover:underline"
+  >
+    Show more ↓
+  </button>
+)}
+  
 
 </Box>
         {/* 🟢 SUBSCRIBERS */}
@@ -269,14 +271,15 @@ const logout = () => {
 
   </div>
 
-  {visibleSubs < subs.length && (
-   <button
-  onClick={() => setVisibleProducts(products.length)}
-  className="mt-3 text-xs text-yellow-500 hover:underline"
->
-  Show more ↓
-</button>
-  )}
+{visibleSubs < subs.length && (
+  <button
+    onClick={() => setVisibleSubs(subs.length)}
+    className="mt-3 text-xs text-yellow-500 hover:underline"
+  >
+    Show more ↓
+  </button>
+)}
+ 
 
 </Box>
 
