@@ -62,7 +62,7 @@ export default function Navbar() {
           {/* 🔥 LOGO */}
           <Link to="/" className="flex items-center group">
             <img 
-              src="/logov.png" 
+              src="/logos.png" 
               className="
                 h-12 object-contain
                 transition duration-300
@@ -176,7 +176,7 @@ export default function Navbar() {
       transition-all duration-300 flex items-center justify-center
       ${open 
         ? "rotate-90 text-yellow-500 scale-110 text-2xl" 
-        : "rotate-0 text-black dark:text-white scale-100 text-3xl"}
+        : "rotate-0 text-black dark:text-white scale-100 text-4xl"}
     `}
   >
     {open ? "✕" : "≡"}

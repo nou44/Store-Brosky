@@ -377,7 +377,7 @@ useEffect(() => {
       <div className="mt-12 py-8 border-t border-gray-200 dark:border-yellow-500/20 text-center">
 
         <img
-          src="/logov.png"
+          src="/logos.png"
           alt="logo"
           className="h-20 mx-auto mb-3 opacity-80 hover:opacity-100 transition"
         />

@@ -27,7 +27,7 @@ export default function Loader({ onFinish }) {
       {/* LOGO */}
       <div className="relative mb-10">
         <img
-          src="/logov.png"
+          src="/logos.png"
           className="w-24 animate-logo"
         />
 
