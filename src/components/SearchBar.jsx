@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Search, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar() {
+export default function SearchBar({ search, setSearch }) {
   const [open, setOpen] = useState(false);
-
+const navigate = useNavigate();
   return (
     <div className="flex items-center ml-2">
 
@@ -41,6 +42,10 @@ export default function SearchBar() {
             autoFocus
             type="text"
             placeholder="Search..."
+            onChange={(e) => {
+  setSearch(e.target.value);
+  navigate(`/products?search=${e.target.value}`);
+}}
             className="
               w-full
 
@@ -93,6 +98,10 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search..."
+      onChange={(e) => {
+  setSearch(e.target.value);
+  navigate(`/products?search=${e.target.value}`);
+}}
           className="
             w-full
 

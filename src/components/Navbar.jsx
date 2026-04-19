@@ -10,7 +10,7 @@ export default function Navbar() {
   const menuRef = useRef();
 
   const navigate = useNavigate();
-
+  const [search, setSearch] = useState("");
   // ✅ user (reactive)
   const [user, setUser] = useState(localStorage.getItem("user"));
 
@@ -76,7 +76,7 @@ export default function Navbar() {
     </Link>
 
     {/* SEARCH 👇 */}
-    <SearchBar />
+   <SearchBar search={search} setSearch={setSearch} />
 
   </div>
 

@@ -1,14 +1,29 @@
 import products from "../data/product";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 export default function Products() {
   const navigate = useNavigate();
   const { category } = useParams();
 
-  const filteredProducts = category
-    ? products.filter(p => p.category.toLowerCase() === category)
-    : products;
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const search = query.get("search") || "";
+
+  // ✅ هنا دير filter (هاد الكود ديالك)
+  const filteredProducts = products.filter((p) => {
+    const matchCategory = category
+      ? p.category.toLowerCase() === category
+      : true;
+
+   const matchSearch =
+  p.name.toLowerCase().includes(search.toLowerCase()) ||
+  p.shortName.toLowerCase().includes(search.toLowerCase()) ||
+  p.category.toLowerCase().includes(search.toLowerCase());
+
+    return matchCategory && matchSearch;
+  });
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
