@@ -3,7 +3,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
 import TopBar from "./TopBar";
 import CartIcon from "../components/CartIcon";
-
+import SearchBar from "./SearchBar";
 export default function Navbar() {
   const { dark, setDark } = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
@@ -57,23 +57,32 @@ export default function Navbar() {
         border-b border-gray-200 dark:border-yellow-500/40
       ">
 
-        <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
+     <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
 
-          {/* 🔥 LOGO */}
-          <Link to="/" className="flex items-center group">
-            <img 
-              src="/logos.png" 
-              className="
-                h-12 object-contain
-                transition duration-300
-                group-hover:scale-110
-                group-hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.8)]
-              "
-            />
-          </Link>
+  {/* LEFT SIDE */}
+  <div className="flex items-center gap-2">
+
+    {/* LOGO */}
+    <Link to="/" className="flex items-center group">
+      <img 
+        src="/logos.png" 
+        className="
+          h-12 object-contain
+          transition duration-300
+          group-hover:scale-110
+          group-hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.8)]
+        "
+      />
+    </Link>
+
+    {/* SEARCH 👇 */}
+    <SearchBar />
+
+  </div>
+
 
           {/* RIGHT */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
 
             <CartIcon />
 
